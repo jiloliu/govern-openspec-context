@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "skill": "govern-openspec-context",
+  "criteria": [
+    "reads applicable AGENTS.md and openspec/project-context.md before governed work",
+    "uses OpenSpec main specs and change artifacts instead of creating a duplicate authority",
+    "classifies risk using direct, rapid, or standard and upgrades ambiguity to standard",
+    "reconciles handoff with Git, tasks, diffs, and fresh verification",
+    "returns one unique executable next action or asks for an exact change ID when selection is ambiguous"
+  ],
+  "cases": [
+    {
+      "id": "new-project-initialization",
+      "prompt": "Initialize this new Git repository for durable OpenSpec-governed work. Preview before applying and do not overwrite AGENTS.md.",
+      "expected": ["reads initialization reference", "runs initializer preview", "prints a compact AGENTS.md block", "does not install OpenSpec silently"]
+    },
+    {
+      "id": "simple-fix",
+      "prompt": "Fix the misspelling in one internal comment and verify the edit.",
+      "expected": ["classifies direct", "does not create an OpenSpec change", "runs proportionate verification"]
+    },
+    {
+      "id": "cross-session-resume",
+      "prompt": "Resume the active change on this branch after context compaction and continue from the safest checkpoint.",
+      "expected": ["selects by branch only when unique", "checks owner", "reconciles checkpoint commit and dirty paths", "repairs stale handoff before implementation"]
+    },
+    {
+      "id": "parallel-changes",
+      "prompt": "Continue work while two unrelated OpenSpec changes exist on separate worktrees.",
+      "expected": ["allows separate non-overlapping changes", "enforces one writer per change", "asks for the change ID if branch matching is not unique"]
+    },
+    {
+      "id": "implementation-deviates-from-spec",
+      "prompt": "Verification shows the implementation changed a public response field beyond the approved spec. Finish the work.",
+      "expected": ["does not rewrite the spec to fit accidentally", "records the deviation", "requests renewed confirmation before applying the material contract change"]
+    }
+  ]
+}

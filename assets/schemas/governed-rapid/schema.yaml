@@ -1,0 +1,36 @@
+name: governed-rapid
+version: 1
+description: Minimal non-behavioral change with durable cross-session handoff
+
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Concise intent, boundaries, impact, and rapid-profile rationale
+    template: proposal.md
+    instruction: |
+      Briefly explain the bounded internal change, why it is safe to omit behavioral
+      specs and detailed design, its exclusions, and how it will be verified.
+    requires: []
+
+  - id: tasks
+    generates: tasks.md
+    description: Short implementation and verification checklist
+    template: tasks.md
+    instruction: |
+      Create a small dependency-ordered checkbox list with implementation and
+      verification. Keep tasks concrete; do not introduce unrelated behavior work.
+    requires: [proposal]
+
+  - id: handoff
+    generates: handoff.md
+    description: Mutable owner, checkpoint, evidence, and exact restart action
+    template: handoff.md
+    instruction: |
+      Create the initial factual handoff. Assign exactly one writer and branch or
+      worktree, record a real Git checkpoint commit and time, identify the first task,
+      and state one exact next action. Keep verification evidence structured.
+    requires: [tasks]
+
+apply:
+  requires: [tasks, handoff]
+  tracks: tasks.md
