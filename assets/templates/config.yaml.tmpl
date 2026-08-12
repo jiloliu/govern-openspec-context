@@ -1,30 +1,26 @@
-schema: governed-standard
+schema: spec-driven
 
 context: |
   Read openspec/project-context.md completely before planning or applying a change.
-  Treat openspec/specs as accepted behavior and each change folder as proposed intent.
-  Keep exactly one writer per active change and maintain its handoff.md at task
-  boundaries. Never store secrets or credentials in OpenSpec artifacts.
+  Treat openspec/specs as accepted behavior and each active change as proposed intent.
+  Reconstruct progress from tasks.md, repository state, and fresh verification. Do not
+  create handoff, status, ownership, checkpoint, or duplicate archive files.
 
 rules:
   proposal:
-    - State the govern-openspec-context risk profile and its rationale.
     - Bound in-scope and out-of-scope work explicitly.
+  design:
+    - Route durable architectural decisions to the repository's ADR convention.
   tasks:
-    - Include implementation, scenario-mapped verification, and final handoff updates.
-    - Keep tasks dependency-ordered, concrete, and independently checkable.
-  handoff:
-    - Record one owner, branch or worktree, Git checkpoint commit and time, structured
-      verification evidence, necessary uncommitted paths, and one exact next action.
-    - Keep progress factual; do not duplicate requirements, design, or secrets.
+    - Include implementation and scenario-mapped verification.
+    - Check a task only when repository evidence supports completion.
 
 operations:
   apply:
     guidance:
-      - Reconcile code, tasks, and handoff before continuing resumed work.
-      - Update handoff at task boundaries and after verification.
-      - Synchronize stable architecture facts to project-context.md before closeout.
+      - Reconcile code, tasks, and current diffs before continuing resumed work.
+      - Synchronize stable architecture facts to project-context.md or an ADR.
   archive:
     guidance:
       - For branch or PR delivery, archive after merge unless explicitly directed otherwise.
-      - Do not archive with incomplete tasks, blockers, or failed strict validation.
+      - Do not archive with incomplete tasks or failed strict validation.

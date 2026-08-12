@@ -1,17 +1,14 @@
 <!-- govern-openspec-context:start -->
-## OpenSpec-governed changes
+## Durable project context
 
-- Use `$govern-openspec-context` for non-trivial project changes and for resuming any
-  active OpenSpec change.
-- At startup, read `openspec/project-context.md`, enumerate changes with OpenSpec JSON,
-  and reconcile the selected change's artifacts and `handoff.md` with repository state.
-- Let the governance skill classify risk and automatically compose the generated
-  OpenSpec action skills; do not require the user to invoke every lifecycle phase.
-- Keep exactly one writer and one exclusive implementation branch/worktree per active
-  change. Parallel work must use separate, non-overlapping changes and branches.
-- Update `handoff.md` at task boundaries and before cross-session handoff. Use real Git
-  checkpoint commits and structured verification results; never store secrets or
-  credentials in OpenSpec artifacts.
-- For branch/PR delivery, archive after merge unless the user explicitly selects local
-  branch archive.
+- Use `$govern-openspec-context` for non-trivial project changes, resuming active
+  OpenSpec work, and tracing relevant project decisions.
+- Before analysis or modification, read `openspec/project-context.md`, applicable
+  accepted specs, and any active change relevant to the request.
+- Treat `openspec/project-context.md` as stable routing context, not task progress or a
+  history log. Put detailed architectural decisions in the repository's ADR location.
+- After context compaction or in a new session, reconstruct current work from OpenSpec
+  artifacts, Git state, code, and fresh verification; do not create handoff files.
+- Query archived changes and Git history only when current specs, context, and ADRs do
+  not explain a relevant behavior or decision.
 <!-- govern-openspec-context:end -->
