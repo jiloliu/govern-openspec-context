@@ -38,6 +38,38 @@ not authorize implementation when the user asked only for analysis or planning.
 After conversation compaction, repeat the relevant reads and fresh verification. Do not
 write a repository checkpoint merely because compaction occurred.
 
+## Delegate independent read-only work
+
+Reassess whether subagents would materially improve the work after durable context is
+loaded, after a standard change's design and task dependencies are clear, and before
+multi-hypothesis diagnosis or final verification. Delegate when all of these are true:
+
+- at least two concrete workstreams are independent and can run concurrently;
+- each workstream has bounded scope, inputs, stopping conditions, and required evidence;
+- parallel work materially reduces elapsed time or context noise, or improves coverage;
+- the workstreams do not depend on one ordered reasoning chain or contend for mutable
+  state.
+
+Good candidates include exploring separate modules, investigating independent failure
+hypotheses, reviewing security, compatibility, or performance risks, running independent
+tests or log analyses, and mapping separate delta-spec scenarios to code and tests. For
+independent implementation tasks, subagents may analyze file boundaries, risks, and
+recommended edits, but the root agent performs every write.
+
+Use one subagent per independent workstream within the environment's concurrency limit.
+Tell the user briefly what is being delegated and that it is read-only. In every subagent
+task, require read-only work, prohibit edits to repository-tracked files and OpenSpec
+artifacts, and specify the expected evidence and return format plus the stopping condition.
+Wait for the relevant results, synthesize them in the root thread, resolve conflicts, and
+recheck material claims against repository evidence.
+
+Do not delegate direct changes, merely sequential steps, lifecycle transitions, or work
+that would compete over shared state. The root agent exclusively owns change
+classification and selection, OpenSpec artifact and source edits, approval boundaries,
+task completion claims, final diff review and verification, project-context or ADR
+synchronization, and archive. If subagents are unavailable or delegation fails, say so
+briefly and continue serially; optional delegation must not block the lifecycle.
+
 ## Load OpenSpec action skills automatically
 
 Before an OpenSpec action, locate the generated action skill in applicable project skill
