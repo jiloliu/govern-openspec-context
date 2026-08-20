@@ -12,6 +12,24 @@ log, or second archive system.
 Honor applicable `AGENTS.md` files and the user's requested scope first. This skill does
 not authorize implementation when the user asked only for analysis or planning.
 
+## Write bilingual governance artifacts
+
+Write new or updated skill-controlled governance documents in Simplified Chinese first,
+followed immediately by an English translation. This applies to project context, the
+printed `AGENTS.md` block, and OpenSpec proposals, specs, designs, and tasks.
+
+- For prose, write the Chinese paragraph first and the English paragraph next with an
+  `English:` prefix.
+- For list items, task descriptions, short labels, requirement names, and scenario names,
+  use `中文 / English` in one semantic item. Do not duplicate capabilities, requirements,
+  scenarios, or task checkboxes merely to carry the translation.
+- Preserve OpenSpec's canonical structure exactly, including delta operation headings,
+  `Requirement:`, `Scenario:`, `WHEN`, `THEN`, and task checkbox syntax. Translate only
+  the natural-language content around or after those markers.
+- Do not translate generated `.agents/skills/openspec-*` files or create parallel
+  `.zh-CN.md` artifacts. Do not retrofit historical artifacts unless the user explicitly
+  requests it; apply this policy when creating or otherwise updating an artifact.
+
 ## Select the operation
 
 - For new adoption, read `references/initialization.md`, preview the initializer, apply

@@ -1,26 +1,40 @@
 schema: spec-driven
 
 context: |
-  Read openspec/project-context.md completely before planning or applying a change.
-  Treat openspec/specs as accepted behavior and each active change as proposed intent.
-  Reconstruct progress from tasks.md, repository state, and fresh verification. Do not
-  create handoff, status, ownership, checkpoint, or duplicate archive files.
+  在规划或实施变更前，完整阅读 openspec/project-context.md。
+  English: Read openspec/project-context.md completely before planning or applying a change.
+  将 openspec/specs 视为已接受行为，将每个活动变更视为提议意图。
+  English: Treat openspec/specs as accepted behavior and each active change as proposed intent.
+  从 tasks.md、仓库状态和最新验证重建进度。不要创建交接、状态、所有权、检查点或重复归档文件。
+  English: Reconstruct progress from tasks.md, repository state, and fresh verification. Do not create handoff, status, ownership, checkpoint, or duplicate archive files.
+  新建或更新治理工件时，先写简体中文，再紧接英文翻译；不要自动重写未被修改的历史工件。
+  English: In new or updated governance artifacts, write Simplified Chinese first and its English translation immediately after it; do not automatically rewrite untouched historical artifacts.
+  普通段落先写中文，下一段以 English: 开头；列表、短标签、需求名、场景名和任务描述使用 中文 / English。
+  English: Put Chinese prose first and prefix the following English paragraph with English:; use 中文 / English for list items, short labels, requirement names, scenario names, and task descriptions.
+  保持 OpenSpec 固定结构标记为英文，不要翻译上游生成的 .agents/skills/openspec-* 文件，也不要创建 .zh-CN.md 镜像工件。
+  English: Preserve canonical OpenSpec structural markers in English; do not translate upstream-generated .agents/skills/openspec-* files or create parallel .zh-CN.md artifacts.
 
 rules:
   proposal:
-    - Bound in-scope and out-of-scope work explicitly.
+    - 中文内容在前，英文翻译紧随其后；每个能力只列一次。 / Put Chinese content first and its English translation immediately after it; list each capability only once.
+    - 明确界定范围内和范围外的工作。 / Bound in-scope and out-of-scope work explicitly.
+  specs:
+    - 保持 Purpose、ADDED/MODIFIED/REMOVED/RENAMED Requirements、Requirement、Scenario、WHEN 和 THEN 等固定标记为英文且格式不变。 / Keep canonical markers such as Purpose, ADDED/MODIFIED/REMOVED/RENAMED Requirements, Requirement, Scenario, WHEN, and THEN in English with their exact required syntax.
+    - 需求与场景正文先写中文，再提供英文翻译；每个需求和场景只保留一个结构块。 / Put Chinese requirement and scenario prose before its English translation; keep one structural block per requirement and scenario.
   design:
-    - Route durable architectural decisions to the repository's ADR convention.
+    - 中文内容在前，英文翻译紧随其后。 / Put Chinese content first and its English translation immediately after it.
+    - 将持久架构决策归入仓库约定的 ADR。 / Route durable architectural decisions to the repository's ADR convention.
   tasks:
-    - Include implementation and scenario-mapped verification.
-    - Check a task only when repository evidence supports completion.
+    - 每个复选框只表示一个任务，任务描述采用 中文 / English。 / Keep one task per checkbox and write its description as 中文 / English.
+    - 包含实施任务和映射到场景的验证任务。 / Include implementation and scenario-mapped verification.
+    - 仅当仓库证据支持完成时才勾选任务。 / Check a task only when repository evidence supports completion.
 
 operations:
   apply:
     guidance:
-      - Reconcile code, tasks, and current diffs before continuing resumed work.
-      - Synchronize stable architecture facts to project-context.md or an ADR.
+      - 在继续恢复的工作前，核对代码、任务和当前差异。 / Reconcile code, tasks, and current diffs before continuing resumed work.
+      - 将稳定架构事实同步到 project-context.md 或 ADR。 / Synchronize stable architecture facts to project-context.md or an ADR.
   archive:
     guidance:
-      - For branch or PR delivery, archive after merge unless explicitly directed otherwise.
-      - Do not archive with incomplete tasks or failed strict validation.
+      - 对分支或 PR 交付，除非明确另有要求，否则在合并后归档。 / For branch or PR delivery, archive after merge unless explicitly directed otherwise.
+      - 存在未完成任务或严格校验失败时不要归档。 / Do not archive with incomplete tasks or failed strict validation.
