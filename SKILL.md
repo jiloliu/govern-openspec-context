@@ -1,6 +1,7 @@
 ---
 name: govern-openspec-context
-description: Keep durable project context and orchestrate important changes with OpenSpec. Use when Codex needs to initialize a new OpenSpec-governed project, load stable project background and constraints in a new or compacted session, classify and drive a non-trivial change through planning, implementation, verification, and archive, resume an active change from repository evidence, or trace relevant architecture decisions and change history. Do not use for repositories that are not adopting OpenSpec or for migrating legacy governance files.
+description: Keep durable project context and orchestrate important changes with OpenSpec. This skill should be used when WorkBuddy needs to initialize a new OpenSpec-governed project, load stable project background and constraints in a new or compacted session, classify and drive a non-trivial change through planning, implementation, verification, and archive, resume an active change from repository evidence, or trace relevant architecture decisions and change history. Do not use for repositories that are not adopting OpenSpec or for migrating legacy governance files.
+agent_created: true
 ---
 
 # Govern OpenSpec Context
@@ -26,9 +27,10 @@ printed `AGENTS.md` block, and OpenSpec proposals, specs, designs, and tasks.
 - Preserve OpenSpec's canonical structure exactly, including delta operation headings,
   `Requirement:`, `Scenario:`, `WHEN`, `THEN`, and task checkbox syntax. Translate only
   the natural-language content around or after those markers.
-- Do not translate generated `.agents/skills/openspec-*` files or create parallel
-  `.zh-CN.md` artifacts. Do not retrofit historical artifacts unless the user explicitly
-  requests it; apply this policy when creating or otherwise updating an artifact.
+- Do not translate generated `.codebuddy/skills/openspec-*` files or generated skills in
+  an explicitly selected alternate tool root. Do not create parallel `.zh-CN.md`
+  artifacts. Do not retrofit historical artifacts unless the user explicitly requests
+  it; apply this policy when creating or otherwise updating an artifact.
 
 ## Select the operation
 
@@ -58,7 +60,7 @@ write a repository checkpoint merely because compaction occurred.
 
 ## Delegate independent read-only work
 
-Reassess whether subagents would materially improve the work after durable context is
+Reassess whether delegated agents would materially improve the work after durable context is
 loaded, after a standard change's design and task dependencies are clear, and before
 multi-hypothesis diagnosis or final verification. Delegate when all of these are true:
 
@@ -71,30 +73,32 @@ multi-hypothesis diagnosis or final verification. Delegate when all of these are
 Good candidates include exploring separate modules, investigating independent failure
 hypotheses, reviewing security, compatibility, or performance risks, running independent
 tests or log analyses, and mapping separate delta-spec scenarios to code and tests. For
-independent implementation tasks, subagents may analyze file boundaries, risks, and
-recommended edits, but the root agent performs every write.
+independent implementation tasks, delegated agents may analyze file boundaries, risks, and
+recommended edits, but the primary agent performs every write.
 
-Use one subagent per independent workstream within the environment's concurrency limit.
-Tell the user briefly what is being delegated and that it is read-only. In every subagent
+Use one delegated agent per independent workstream within the environment's concurrency limit.
+Tell the user briefly what is being delegated and that it is read-only. In every delegated-agent
 task, require read-only work, prohibit edits to repository-tracked files and OpenSpec
 artifacts, and specify the expected evidence and return format plus the stopping condition.
 Wait for the relevant results, synthesize them in the root thread, resolve conflicts, and
 recheck material claims against repository evidence.
 
 Do not delegate direct changes, merely sequential steps, lifecycle transitions, or work
-that would compete over shared state. The root agent exclusively owns change
+that would compete over shared state. The primary agent exclusively owns change
 classification and selection, OpenSpec artifact and source edits, approval boundaries,
 task completion claims, final diff review and verification, project-context or ADR
-synchronization, and archive. If subagents are unavailable or delegation fails, say so
+synchronization, and archive. If delegated agents are unavailable or delegation fails, say so
 briefly and continue serially; optional delegation must not block the lifecycle.
 
 ## Load OpenSpec action skills automatically
 
 Before an OpenSpec action, locate the generated action skill in applicable project skill
-roots, preferring `.agents/skills/openspec-*` and accepting legacy tool-specific roots
-such as `.codex/skills/`. Match frontmatter name and intent rather than assuming exact
-punctuation. Read that `SKILL.md` completely immediately before the action and follow its
-action-local CLI, artifact, validation, and safety mechanics.
+roots. For the default WorkBuddy setup, prefer `.codebuddy/skills/openspec-*`. When an
+alternate OpenSpec tool was explicitly selected, also accept its generated roots, including
+`.agents/skills/openspec-*` and legacy `.codex/skills/openspec-*` for Codex. Match
+frontmatter name and intent rather than assuming exact punctuation. Read that `SKILL.md`
+completely immediately before the action and follow its action-local CLI, artifact,
+validation, and safety mechanics.
 
 This skill owns sequencing, so replace standalone prompts to ask the user to invoke the
 next action with the lifecycle and approval policy below. If required generated skills

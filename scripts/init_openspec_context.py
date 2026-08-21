@@ -28,8 +28,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--openspec-bin", default="openspec")
     parser.add_argument(
         "--tools",
-        default="codex",
-        help="OpenSpec tool IDs passed to non-interactive init (default: codex).",
+        default="codebuddy",
+        help="OpenSpec tool IDs passed to non-interactive init (default: codebuddy for WorkBuddy).",
     )
     parser.add_argument(
         "--apply", action="store_true", help="Create files; preview is the default."
@@ -109,12 +109,16 @@ def assert_new_adoption(project_root: Path) -> None:
 
 
 def find_legacy_instruction_files(project_root: Path, tools: str) -> list[Path]:
-    candidates = (
+    tool_ids = {value.strip() for value in tools.split(",") if value.strip()}
+    candidates = [
         project_root / ".codex" / "prompts",
         project_root / ".claude" / "commands" / "openspec",
         project_root / ".claude" / "commands" / "opsx",
         project_root / ".cursor" / "commands",
-    )
+    ]
+    if "codebuddy" in tool_ids or "all" in tool_ids:
+        candidates.append(project_root / ".codebuddy" / "commands" / "openspec")
+
     matches: list[Path] = []
     for root in candidates:
         if root.is_file():
@@ -127,7 +131,6 @@ def find_legacy_instruction_files(project_root: Path, tools: str) -> list[Path]:
                 and ("openspec" in path.name or "opsx" in path.name or root.name in {"openspec", "opsx"})
             )
 
-    tool_ids = {value.strip() for value in tools.split(",")}
     if "codex" in tool_ids or "all" in tool_ids:
         codex_home = Path(
             os.environ.get("CODEX_HOME", Path.home() / ".codex")
@@ -150,17 +153,27 @@ def preflight_assets(skill_root: Path) -> None:
         raise InitError("Skill assets are incomplete: " + ", ".join(missing))
 
 
-def planned_paths(project_root: Path) -> tuple[Path, ...]:
-    return (
+def planned_paths(project_root: Path, tools: str) -> tuple[Path, ...]:
+    tool_ids = {value.strip() for value in tools.split(",") if value.strip()}
+    paths = [
         project_root / "openspec" / "config.yaml",
         project_root / "openspec" / "project-context.md",
-        project_root / ".agents" / "skills" / "openspec-*",
-    )
+    ]
+    if "codebuddy" in tool_ids or "all" in tool_ids:
+        paths.extend(
+            (
+                project_root / ".codebuddy" / "skills" / "openspec-*",
+                project_root / ".codebuddy" / "commands" / "opsx" / "*",
+            )
+        )
+    if {"codex", "agents", "all"} & tool_ids:
+        paths.append(project_root / ".agents" / "skills" / "openspec-*")
+    return tuple(paths)
 
 
 def print_agents_block(skill_root: Path) -> None:
     template = skill_root / "assets" / "templates" / "agents-section.md.tmpl"
-    print("\nAGENTS.md block to merge with apply_patch:\n")
+    print("\nAGENTS.md block to merge with an available file-editing tool:\n")
     print(template.read_text(encoding="utf-8").rstrip())
 
 
@@ -239,8 +252,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Project root: {project_root}")
         print(f"OpenSpec: {version} ({executable})")
         print("Mode: " + ("apply" if args.apply else "preview"))
+        print(f"OpenSpec tools: {args.tools}")
         print("Planned paths:")
-        for path in planned_paths(project_root):
+        for path in planned_paths(project_root, args.tools):
             print(f"- {path}")
 
         if args.apply:

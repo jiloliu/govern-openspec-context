@@ -15,8 +15,9 @@ Resolve this skill directory and preview first:
 python3 <skill-dir>/scripts/init_openspec_context.py --project-root <repo>
 ```
 
-Preview validates prerequisites, reports planned paths, and prints the `AGENTS.md` block
-without changing the project. Apply only after reviewing existing conventions:
+Preview validates prerequisites, reports the WorkBuddy/CodeBuddy paths that OpenSpec will
+manage, and prints the `AGENTS.md` block without changing the project. Apply only after
+reviewing existing conventions:
 
 ```bash
 python3 <skill-dir>/scripts/init_openspec_context.py \
@@ -24,12 +25,18 @@ python3 <skill-dir>/scripts/init_openspec_context.py \
 ```
 
 Apply runs official OpenSpec initialization with the native `spec-driven` workflow,
-creates `openspec/project-context.md`, and prints but does not edit `AGENTS.md`. It does
-not install OpenSpec, create custom schemas, or add a task-progress authority.
+uses OpenSpec's `codebuddy` adapter by default, creates `openspec/project-context.md`, and
+prints but does not edit `AGENTS.md`. It does not install OpenSpec, create custom schemas,
+or add a task-progress authority.
 
-Merge the printed block into the applicable `AGENTS.md` using `apply_patch`. Preserve
-unrelated rules and resolve conflicts explicitly. Fill project context from verified
-repository facts, then run a normal OpenSpec validation before starting governed work.
+To initialize for another supported OpenSpec tool explicitly, pass its tool ID, for example
+`--tools codex`. The preview reports the selected tools and known generated paths without
+changing the project.
+
+Merge the printed block into the applicable `AGENTS.md` with an available file-editing
+mechanism. Preserve unrelated rules and resolve conflicts explicitly. Fill project context
+from verified repository facts, then run a normal OpenSpec validation before starting
+governed work.
 
 If generated OpenSpec skills are missing or stale, use the installed CLI's documented
 update/profile workflow. Do not hand-write copies of generated action skills.

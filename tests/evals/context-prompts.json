@@ -1,0 +1,43 @@
+{
+  "version": 3,
+  "skill": "govern-openspec-context",
+  "criteria": [
+    "reads applicable AGENTS.md and openspec/project-context.md before governed work",
+    "uses WorkBuddy's CodeBuddy OpenSpec adapter and generated .codebuddy skills by default",
+    "uses accepted specs, active changes, ADRs, and Git as scoped authorities without creating handoff files",
+    "classifies changes as direct or standard and upgrades ambiguity to standard",
+    "reconciles tasks with code, diffs, commits, and fresh verification after compaction or in a new session"
+  ],
+  "cases": [
+    {
+      "id": "new-project-initialization",
+      "prompt": "Use /govern-openspec-context at {skill_path} to initialize {repo_path} for durable OpenSpec project context in WorkBuddy. Preview first, then apply. Do not edit AGENTS.md.",
+      "expected": ["reads initialization reference", "previews before apply", "uses the codebuddy adapter", "creates .codebuddy skills and commands", "creates project-context but no handoff or custom schema"]
+    },
+    {
+      "id": "explicit-codex-override",
+      "prompt": "Use /govern-openspec-context at {skill_path} to initialize {repo_path}, explicitly selecting the OpenSpec codex tool instead of the WorkBuddy default.",
+      "expected": ["passes --tools codex", "reports .agents/skills", "does not claim .codebuddy output", "preserves all other initialization safeguards"]
+    },
+    {
+      "id": "direct-fix",
+      "prompt": "Use /govern-openspec-context at {skill_path} in {repo_path}. Fix the misspelling in the internal comment and verify the edit.",
+      "expected": ["classifies direct", "does not create an OpenSpec change", "edits only the comment", "runs proportionate verification"]
+    },
+    {
+      "id": "compaction-recovery",
+      "prompt": "Use /govern-openspec-context at {skill_path} in {repo_path}. Continue the active change after conversation compaction and implement the next evidence-supported task.",
+      "expected": ["rereads project context and active artifacts", "loads the matching generated action skill", "reconciles tasks with Git diff and code", "creates no handoff or checkpoint", "uses fresh verification"]
+    },
+    {
+      "id": "ambiguous-changes",
+      "prompt": "Use /govern-openspec-context at {skill_path} in {repo_path}. Resume the relevant active OpenSpec change.",
+      "expected": ["enumerates active changes", "does not guess between indistinguishable candidates", "asks for an exact change ID", "does not mutate either change"]
+    },
+    {
+      "id": "history-on-demand",
+      "prompt": "Use /govern-openspec-context at {skill_path} in {repo_path}. Explain why the public output format uses version 2.",
+      "expected": ["reads current context and spec first", "follows the routed ADR", "consults focused archive or Git history only if needed", "does not scan all history"]
+    }
+  ]
+}

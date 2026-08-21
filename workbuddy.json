@@ -1,0 +1,6 @@
+{
+  "display_name": "OpenSpec 项目治理",
+  "display_name_en": "Govern OpenSpec Context",
+  "description_zh": "使用持久项目上下文和 OpenSpec 管理重要变更、跨会话恢复与架构决策追溯。",
+  "description_en": "Manage important changes, cross-session recovery, and architecture decision tracing with durable project context and OpenSpec."
+}

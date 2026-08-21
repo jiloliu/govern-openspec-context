@@ -1,4 +1,0 @@
-interface:
-  display_name: "Govern OpenSpec Context"
-  short_description: "Preserve project context and orchestrate OpenSpec changes"
-  default_prompt: "Use $govern-openspec-context to load durable project context and drive this change with OpenSpec."
